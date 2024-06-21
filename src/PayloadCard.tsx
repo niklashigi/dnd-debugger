@@ -1,4 +1,5 @@
 import { produce } from "immer";
+import { DragEvent } from "react";
 
 import { Payload } from "./payload";
 
@@ -13,19 +14,36 @@ export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
     onUpdate(produce(payload, updateFn));
   };
 
+  const handleDragStart = (event: DragEvent<HTMLDivElement>) => {
+    event.dataTransfer.clearData();
+    for (const payloadData of payload.data) {
+      event.dataTransfer.setData(payloadData.contentType, payloadData.data);
+    }
+  };
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="bg-white rounded-lg shadow p-6">
       {/* Card Header */}
       <div className="flex items-center justify-between gap-3">
-        <input
-          value={payload.label}
-          className="font-bold flex-grow"
-          onChange={(event) =>
-            update((payload) => {
-              payload.label = event.target.value;
-            })
-          }
-        />
+        {/* Drag Handle & Label */}
+        <div
+          draggable
+          onDragStart={handleDragStart}
+          className="flex-grow flex items-center p-2 -ml-2 -mt-2"
+        >
+          <div className="mr-2 text-2xl h-0 -translate-y-4 text-gray-400 cursor-grab">
+            #
+          </div>
+          <input
+            value={payload.label}
+            className="font-bold w-full"
+            onChange={(event) =>
+              update((payload) => {
+                payload.label = event.target.value;
+              })
+            }
+          />
+        </div>
         <button
           className="text-sm px-1 bg-gray-100 text-gray-400 rounded"
           onClick={onDelete}
