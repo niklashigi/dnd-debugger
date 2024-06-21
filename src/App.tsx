@@ -1,12 +1,13 @@
 import { DragEvent, useState } from "react";
 import { produce } from "immer";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 import { PayloadCard } from "./PayloadCard";
 import { Payload } from "./payload";
 import { getDataTransferItemString } from "./utils";
 
 function App() {
-  const [payloads, setPayloads] = useState<Payload[]>([
+  const [payloads, setPayloads] = useLocalStorage<Payload[]>("payloads", [
     {
       label: "Hello World",
       data: [
