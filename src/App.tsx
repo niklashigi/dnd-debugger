@@ -122,6 +122,13 @@ function App() {
                 key={index}
                 payload={payload}
                 onDelete={() => deletePayload(index)}
+                onUpdate={(newPayload) =>
+                  setPayloads(
+                    produce((payloads) => {
+                      payloads[index] = newPayload;
+                    })
+                  )
+                }
               />
             ))}
           </div>

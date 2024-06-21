@@ -1,16 +1,31 @@
+import { produce } from "immer";
+
 import { Payload } from "./payload";
 
 interface PayloadCardProps {
   payload: Payload;
+  onUpdate: (payload: Payload) => void;
   onDelete: () => void;
 }
 
-export function PayloadCard({ payload, onDelete }: PayloadCardProps) {
+export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
+  const update = (updateFn: (payload: Payload) => void) => {
+    onUpdate(produce(payload, updateFn));
+  };
+
   return (
     <div className="bg-white p-6 rounded-lg shadow">
       {/* Card Header */}
-      <div className="flex items-center justify-between">
-        <input value={payload.label} className="font-bold" />
+      <div className="flex items-center justify-between gap-3">
+        <input
+          value={payload.label}
+          className="font-bold flex-grow"
+          onChange={(event) =>
+            update((payload) => {
+              payload.label = event.target.value;
+            })
+          }
+        />
         <button
           className="text-sm px-1 bg-gray-100 text-gray-400 rounded"
           onClick={onDelete}
