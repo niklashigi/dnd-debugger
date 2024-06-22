@@ -76,7 +76,7 @@ function App() {
   };
 
   return (
-    <div className="p-8 min-h-screen bg-gray-100">
+    <div className="p-8 min-h-screen">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <header>
