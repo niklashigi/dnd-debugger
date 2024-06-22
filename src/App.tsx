@@ -9,6 +9,7 @@ import { getDataTransferItemString } from "./utils";
 function App() {
   const [payloads, setPayloads] = useLocalStorage<Payload[]>("payloads", [
     {
+      id: crypto.randomUUID(),
       label: "Hello World",
       data: [
         {
@@ -23,6 +24,7 @@ function App() {
     setPayloads(
       produce((payloads) => {
         payloads.unshift({
+          id: crypto.randomUUID(),
           label: "New Payload",
           data: [
             {
@@ -44,7 +46,8 @@ function App() {
   };
 
   const importDataTransfer = async (transfer: DataTransfer) => {
-    const newPayload = {
+    const newPayload: Payload = {
+      id: crypto.randomUUID(),
       label: "Imported Payload",
       data: await Promise.all(
         Array.from(transfer.items).map(async (item) => {
@@ -125,7 +128,7 @@ function App() {
           <div className="mt-6 flex flex-col gap-4">
             {payloads.map((payload, index) => (
               <PayloadCard
-                key={index}
+                key={payload.id}
                 payload={payload}
                 onDelete={() => deletePayload(index)}
                 onUpdate={(newPayload) =>
