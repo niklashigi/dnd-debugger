@@ -44,30 +44,78 @@ export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
             }
           />
         </div>
-        <button
-          className="text-sm px-1 bg-gray-100 text-gray-400 rounded"
-          onClick={onDelete}
-        >
-          Delete
-        </button>
       </div>
 
       {/* Card Content */}
       <div className="mt-4 flex flex-col gap-2">
+        {/* Data Item List */}
         {payload.data.map(({ contentType, data }, index) => (
           <div key={index} className="flex gap-3 font-mono text-sm">
             <input
               type="text"
               value={contentType}
+              placeholder="Enter content type…"
               className="p-1 bg-gray-100 rounded w-1/3"
+              onChange={(event) =>
+                update((payload) => {
+                  payload.data[index].contentType = event.target.value;
+                })
+              }
             />
             <input
               type="text"
               value={data}
+              placeholder="Enter data…"
               className="p-1 bg-gray-100 rounded w-2/3"
+              onChange={(event) =>
+                update((payload) => {
+                  payload.data[index].data = event.target.value;
+                })
+              }
             />
+            <button
+              className="text-gray-300 font-medium text-xl"
+              title="Remove data"
+              onClick={() =>
+                update((payload) => {
+                  if (payload.data.length === 1) {
+                    alert("At least one data item is required!");
+                    return;
+                  }
+
+                  payload.data.splice(index, 1);
+                })
+              }
+            >
+              ⨯
+            </button>
           </div>
         ))}
+
+        <div className="flex items-center justify-between">
+          <button
+            className="mt-1 text-sm inline-flex items-center gap-2 text-gray-400 hover:text-gray-600 active:text-gray-500 transition"
+            onClick={() =>
+              update(
+                (payload) =>
+                  void payload.data.push({
+                    contentType: "text/plain",
+                    data: "",
+                  })
+              )
+            }
+          >
+            <div className="text-xl">+</div>
+            <div>Add data</div>
+          </button>
+
+          <button
+            className="text-sm px-1 text-gray-400 rounded"
+            onClick={onDelete}
+          >
+            Delete payload
+          </button>
+        </div>
       </div>
     </div>
   );
