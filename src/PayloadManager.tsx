@@ -95,7 +95,7 @@ export function PayloadManager() {
       <div className="flex items-center justify-between gap-2">
         <h2 className="font-bold text-xl text-gray-800">Payloads</h2>
         <button
-          className="bg-gray-200 flex items-center gap-2 text-gray-500 hover:bg-gray-500 hover:text-white active:bg-gray-400 font-medium transition px-2 py-1 rounded text-sm"
+          className="bg-gray-200 flex items-center gap-2 text-gray-500 hover:bg-gray-500 hover:text-white active:bg-gray-400 active:text-white font-medium transition px-2 py-1 rounded text-sm"
           onClick={addPayload}
         >
           <div className="text-xl leading-[0px] -translate-y-[2px] font-light">
