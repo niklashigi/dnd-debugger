@@ -1,5 +1,6 @@
 import { produce } from "immer";
-import React, { DragEvent, forwardRef } from "react";
+import { DragEvent, forwardRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 import { Payload } from "./payload";
 
@@ -55,24 +56,25 @@ export const PayloadCard = forwardRef<HTMLDivElement, PayloadCardProps>(
           {payload.data.map(({ contentType, data }, index) => (
             <div key={index} className="flex gap-3 font-mono text-sm">
               {/* Content type input */}
-              <input
-                type="text"
-                value={contentType}
-                placeholder="Enter content type…"
-                className="p-1 bg-gray-100 text-gray-500 font-semibold rounded w-1/3"
-                onChange={(event) =>
-                  update((payload) => {
-                    payload.data[index].contentType = event.target.value;
-                  })
-                }
-              />
+              <div className="w-52">
+                <input
+                  type="text"
+                  value={contentType}
+                  placeholder="Enter content type…"
+                  className="p-1 bg-gray-100 text-gray-500 font-semibold rounded w-full"
+                  onChange={(event) =>
+                    update((payload) => {
+                      payload.data[index].contentType = event.target.value;
+                    })
+                  }
+                />
+              </div>
 
               {/* Data input */}
-              <input
-                type="text"
+              <TextareaAutosize
                 value={data}
                 placeholder="Enter data…"
-                className="p-1 bg-gray-100 text-gray-800 rounded w-2/3"
+                className="p-1 bg-gray-100 text-gray-800 rounded flex-grow resize-none"
                 onChange={(event) =>
                   update((payload) => {
                     payload.data[index].data = event.target.value;
