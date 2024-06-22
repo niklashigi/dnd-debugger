@@ -1,4 +1,4 @@
-import { DragEvent } from "react";
+import { DragEvent, useState } from "react";
 import { produce } from "immer";
 import { useLocalStorage } from "@uidotdev/usehooks";
 
@@ -19,6 +19,8 @@ export function PayloadManager() {
       ],
     },
   ]);
+
+  const [isReadyToDrop, setIsReadyToDrop] = useState(false);
 
   const addPayload = () => {
     setPayloads(
@@ -66,16 +68,26 @@ export function PayloadManager() {
     );
   };
 
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+  const handleDragEvent = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    event.stopPropagation();
     event.dataTransfer.dropEffect = "copy";
+
+    setIsReadyToDrop(true);
   };
 
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+    setIsReadyToDrop(false);
+
     event.preventDefault();
     if (!event.dataTransfer) return;
 
     void importDataTransfer(event.dataTransfer);
+  };
+
+  const handleDragExit = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsReadyToDrop(false);
   };
 
   return (
@@ -95,8 +107,16 @@ export function PayloadManager() {
 
       {/* Drop Area */}
       <div
-        className="mt-6 p-8 border-2 border-gray-300 border-dashed rounded-lg text-center text-gray-400 text-sm select-none"
-        onDragOver={handleDragOver}
+        className={
+          "mt-6 p-8 border-2 border-gray-300 border-dashed rounded-lg text-center text-gray-400 text-sm select-none transition " +
+          (isReadyToDrop
+            ? "border-gray-400 text-gray-600"
+            : "border-gray-300 text-gray-400")
+        }
+        onDragOver={handleDragEvent}
+        onDragEnter={handleDragEvent}
+        onDragExit={handleDragExit}
+        onDragLeave={handleDragExit}
         onDrop={handleDrop}
       >
         Drag something and drop it here to import…
