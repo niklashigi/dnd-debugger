@@ -36,7 +36,8 @@ export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
           </div>
           <input
             value={payload.label}
-            className="font-bold w-full"
+            placeholder="Enter label…"
+            className="font-bold w-full text-gray-800"
             onChange={(event) =>
               update((payload) => {
                 payload.label = event.target.value;
@@ -51,6 +52,7 @@ export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
         {/* Data Item List */}
         {payload.data.map(({ contentType, data }, index) => (
           <div key={index} className="flex gap-3 font-mono text-sm">
+            {/* Content type input */}
             <input
               type="text"
               value={contentType}
@@ -62,6 +64,8 @@ export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
                 })
               }
             />
+
+            {/* Data input */}
             <input
               type="text"
               value={data}
@@ -73,49 +77,55 @@ export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
                 })
               }
             />
-            <button
-              className="text-gray-300 font-medium text-xl"
-              title="Remove data"
-              onClick={() =>
-                update((payload) => {
-                  if (payload.data.length === 1) {
-                    alert("At least one data item is required!");
-                    return;
-                  }
 
-                  payload.data.splice(index, 1);
-                })
-              }
-            >
-              ⨯
-            </button>
+            {/* "Remove data" button */}
+            {payload.data.length > 1 && (
+              <button
+                className={
+                  "font-medium text-xl" +
+                  " text-gray-300 hover:text-red-500 transition"
+                }
+                title="Remove data"
+                onClick={() =>
+                  update((payload) => void payload.data.splice(index, 1))
+                }
+              >
+                ⨯
+              </button>
+            )}
           </div>
         ))}
+      </div>
 
-        <div className="flex items-center justify-between">
-          <button
-            className="mt-1 text-sm inline-flex items-center gap-2 text-gray-400 hover:text-gray-600 active:text-gray-500 transition"
-            onClick={() =>
-              update(
-                (payload) =>
-                  void payload.data.push({
-                    contentType: "text/plain",
-                    data: "",
-                  })
-              )
-            }
-          >
-            <div className="text-xl">+</div>
-            <div>Add data</div>
-          </button>
+      <div className="mt-3 flex items-center justify-between">
+        <button
+          className={
+            "mt-1 px-1 text-sm inline-flex items-center gap-2" +
+            " text-gray-400 hover:text-gray-600 active:text-gray-500 transition"
+          }
+          onClick={() =>
+            update(
+              (payload) =>
+                void payload.data.push({
+                  contentType: "",
+                  data: "",
+                })
+            )
+          }
+        >
+          <div className="text-xl leading-[0px] -translate-y-[2px]">+</div>
+          <div>Add data</div>
+        </button>
 
-          <button
-            className="text-sm px-1 text-gray-400 rounded"
-            onClick={onDelete}
-          >
-            Delete payload
-          </button>
-        </div>
+        <button
+          className={
+            "text-sm px-1 rounded" +
+            " text-gray-400 hover:text-red-700 hover:bg-red-100 active:text-red-600 transition"
+          }
+          onClick={onDelete}
+        >
+          Delete payload
+        </button>
       </div>
     </div>
   );

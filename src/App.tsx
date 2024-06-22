@@ -80,7 +80,9 @@ function App() {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <header>
-          <h1 className="text-3xl font-bold">Drag & Drop Debugger</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Drag & Drop Debugger
+          </h1>
           <div className="mt-3 text-gray-600 text-sm leading-relaxed">
             Building advanced behaviors on top the web's{" "}
             <a
@@ -97,26 +99,29 @@ function App() {
 
         <main className="mt-8">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="font-bold text-xl">Payloads</h2>
+            <h2 className="font-bold text-xl text-gray-800">Payloads</h2>
             <button
-              className="bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 transition text-white px-2 py-1 rounded text-sm shadow"
+              className="bg-gray-200 flex items-center gap-2 text-gray-500 hover:bg-gray-500 hover:text-white active:bg-gray-400 font-medium transition px-2 py-1 rounded text-sm"
               onClick={addPayload}
             >
-              Add Payload
+              <div className="text-xl leading-[0px] -translate-y-[2px] font-light">
+                +
+              </div>
+              Create payload
             </button>
           </div>
 
           {/* Drop Area */}
           <div
-            className="mt-4 p-8 bg-gray-200 rounded-lg border text-center text-gray-700"
+            className="mt-6 p-8 border-2 border-gray-300 border-dashed rounded-lg text-center text-gray-400 select-none"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
-            Drop here to import a payload…
+            Drag something and drop it here to import…
           </div>
 
           {/* Payload List */}
-          <div className="mt-4 flex flex-col gap-4">
+          <div className="mt-6 flex flex-col gap-4">
             {payloads.map((payload, index) => (
               <PayloadCard
                 key={index}
