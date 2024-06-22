@@ -25,7 +25,7 @@ function App() {
       produce((payloads) => {
         payloads.unshift({
           id: crypto.randomUUID(),
-          label: "New Payload",
+          label: "New payload",
           data: [
             {
               contentType: "text/plain",
