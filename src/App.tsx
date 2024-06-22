@@ -114,7 +114,7 @@ function App() {
 
           {/* Drop Area */}
           <div
-            className="mt-6 p-8 border-2 border-gray-300 border-dashed rounded-lg text-center text-gray-400 select-none"
+            className="mt-6 p-8 border-2 border-gray-300 border-dashed rounded-lg text-center text-gray-400 text-sm select-none"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >

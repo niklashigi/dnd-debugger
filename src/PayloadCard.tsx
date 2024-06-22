@@ -57,7 +57,7 @@ export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
               type="text"
               value={contentType}
               placeholder="Enter content type…"
-              className="p-1 bg-gray-100 rounded w-1/3"
+              className="p-1 bg-gray-100 text-gray-500 font-semibold rounded w-1/3"
               onChange={(event) =>
                 update((payload) => {
                   payload.data[index].contentType = event.target.value;
@@ -70,7 +70,7 @@ export function PayloadCard({ payload, onDelete, onUpdate }: PayloadCardProps) {
               type="text"
               value={data}
               placeholder="Enter data…"
-              className="p-1 bg-gray-100 rounded w-2/3"
+              className="p-1 bg-gray-100 text-gray-800 rounded w-2/3"
               onChange={(event) =>
                 update((payload) => {
                   payload.data[index].data = event.target.value;
