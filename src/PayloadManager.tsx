@@ -1,6 +1,7 @@
 import { DragEvent, useState } from "react";
 import { produce } from "immer";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import FlipMove from "react-flip-move";
 
 import { PayloadCard } from "./PayloadCard";
 import { Payload } from "./payload";
@@ -123,21 +124,24 @@ export function PayloadManager() {
       </div>
 
       {/* Payload List */}
-      <div className="mt-6 flex flex-col gap-4">
-        {payloads.map((payload, index) => (
-          <PayloadCard
-            key={payload.id}
-            payload={payload}
-            onDelete={() => deletePayload(index)}
-            onUpdate={(newPayload) =>
-              setPayloads(
-                produce((payloads) => {
-                  payloads[index] = newPayload;
-                })
-              )
-            }
-          />
-        ))}
+      <div className="mt-2 flex flex-col">
+        <FlipMove>
+          {payloads.map((payload, index) => (
+            <PayloadCard
+              className="mt-4"
+              key={payload.id}
+              payload={payload}
+              onDelete={() => deletePayload(index)}
+              onUpdate={(newPayload) =>
+                setPayloads(
+                  produce((payloads) => {
+                    payloads[index] = newPayload;
+                  })
+                )
+              }
+            />
+          ))}
+        </FlipMove>
       </div>
     </div>
   );
